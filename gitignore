@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.venv/
+venv/
+
+# Working database
+dronebase.db
+dronebase.db-wal
+dronebase.db-shm
+*.db-journal
+
+# User data
+backups/
+logs/
+media/
+documents/
+reports/
+qr_codes/
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
