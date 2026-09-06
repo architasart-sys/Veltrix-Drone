@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="../assets/veltrix_drone_logo.png" alt="Veltrix Drone" width="180">
+<img src="assets/veltrix_drone_logo.png" alt="Veltrix Drone" width="180">
 
 # Veltrix Drone Android
 ## Complete User Manual
