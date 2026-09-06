@@ -4,13 +4,12 @@
 
 # Veltrix Drone
 
-### Local engineering system for UAV fleet management, operation, maintenance and technical analysis
+### Engineering system for UAV fleet management, operation and technical support
 
 ![Version](https://img.shields.io/badge/version-v1.0-2f81f7)
 ![Release](https://img.shields.io/badge/release-Stable-238636)
 ![Windows](https://img.shields.io/badge/platform-Windows-0078D4)
-![Offline](https://img.shields.io/badge/mode-Offline--first-8250df)
-![Database](https://img.shields.io/badge/database-SQLite-0f80cc)
+![Offline](https://img.shields.io/badge/work-offline--first-8250df)
 ![License](https://img.shields.io/badge/license-Non--Sale-d73a49)
 
 **Drones · Flights · LiPo · Maintenance · Repairs · Inventory · Reliability · Engineering Analysis · Reports · Windows ↔ Android**
@@ -22,338 +21,199 @@
 ---
 
 > [!IMPORTANT]
-> **Veltrix Drone v1.0** is a standalone local Windows application.  
-> Core functionality works **without Internet access**, and operational data is stored locally in SQLite.
+> **Veltrix Drone v1.0** is a complete Windows application for UAV fleet operation and technical management.  
+> Core functionality works locally and does not require a permanent Internet connection.
 
 > [!WARNING]
-> The working file `dronebase.db` contains user data.  
-> **Do not publish it on GitHub and do not replace it when updating the application.**
+> Always create a backup before updating the application or performing a large data import.
 
 ---
 
-# 📌 Table of Contents
+# 📌 Contents
 
-- [What is Veltrix Drone](#-what-is-veltrix-drone)
-- [What the application can do](#-what-the-application-can-do)
-- [Quick start in 5 minutes](#-quick-start-in-5-minutes)
+- [About Veltrix Drone](#-about-veltrix-drone)
+- [Who is it for](#-who-is-it-for)
+- [Main Features](#-main-features)
+- [Quick Start](#-quick-start)
 - [Installation](#-installation)
-- [First launch](#-first-launch)
-- [Main menu](#-main-menu)
-- [How to start from an empty database](#-how-to-start-from-an-empty-database)
+- [First Launch](#-first-launch)
+- [Recommended Setup Order](#-recommended-setup-order)
+- [Dashboard](#-dashboard)
 - [Drones](#-drones)
 - [Drone Card](#-drone-card)
-- [LiPo Batteries](#-lipo-batteries)
+- [Planning](#-planning)
+- [Dispatch Center](#-dispatch-center)
 - [Flights](#-flights)
-- [Planning and Dispatch](#-planning-and-dispatch)
-- [Preflight and Postflight](#-preflight-and-postflight)
+- [Preflight](#-preflight)
+- [Postflight](#-postflight)
+- [Flight Debrief](#-flight-debrief)
+- [LiPo Batteries](#-lipo-batteries)
 - [Repairs](#-repairs)
 - [Maintenance](#-maintenance)
-- [Components and Configuration](#-components-and-configuration)
-- [Inventory and Procurement](#-inventory-and-procurement)
-- [Reliability and Engineering](#-reliability-and-engineering)
+- [Components and Nodes](#-components-and-nodes)
+- [Configuration Control](#-configuration-control)
+- [Bench Tests and Return to Service](#-bench-tests-and-return-to-service)
+- [Work Packages and Technical Cycles](#-work-packages-and-technical-cycles)
+- [Reliability](#-reliability)
+- [Reliability Cases](#-reliability-cases)
+- [Corrective Actions](#-corrective-actions)
+- [Effectiveness Tracking](#-effectiveness-tracking)
+- [Engineering Command Center](#-engineering-command-center)
+- [Inventory](#-inventory)
+- [Procurement](#-procurement)
+- [Economics and Budget](#-economics-and-budget)
 - [Diagnostics and Knowledge Base](#-diagnostics-and-knowledge-base)
 - [QR Codes](#-qr-codes)
-- [Attachments and Documents](#-attachments-and-documents)
+- [Attachments](#-attachments)
 - [Excel](#-excel)
+- [Technical Reports](#-technical-reports)
 - [Backups](#-backups)
-- [Windows ↔ Android](#-windows--android)
 - [Users and Roles](#-users-and-roles)
+- [Windows ↔ Android](#-windows--android)
 - [Typical Workflows](#-typical-workflows)
-- [Updating the Application](#-updating-the-application)
-- [Where Data is Stored](#-where-data-is-stored)
-- [What Must Not Be Uploaded to GitHub](#-what-must-not-be-uploaded-to-github)
+- [Updating](#-updating)
 - [Troubleshooting](#-troubleshooting)
 - [FAQ](#-faq)
 - [License](#-license)
 
 ---
 
-# 🚁 What is Veltrix Drone
+# 🚁 About Veltrix Drone
 
-**Veltrix Drone** is a unified engineering environment for working with a fleet of unmanned aerial vehicles.
+**Veltrix Drone** is a unified engineering environment for managing the complete technical lifecycle of unmanned aerial vehicles.
 
-The application covers the full technical lifecycle of a UAV:
+Instead of maintaining separate disconnected logs, the application links operational and engineering records into one workflow:
 
 ```text
-Registration
-      ↓
-Operation
-      ↓
-Mission planning
-      ↓
-Preflight check
-      ↓
+Drone
+  ↓
+Planning
+  ↓
+Preflight
+  ↓
 Flight
-      ↓
-Postflight check
-      ↓
-Diagnostics / event / failure
-      ↓
-Repair or maintenance
-      ↓
-Bench verification
-      ↓
+  ↓
+Postflight
+  ↓
+Event / failure
+  ↓
+Diagnostics
+  ↓
+Repair / maintenance
+  ↓
+Verification
+  ↓
 Return to Service
-      ↓
+  ↓
 Validation flight
-      ↓
+  ↓
 Reliability analysis
-      ↓
-Complete technical history
+  ↓
+Complete aircraft history
 ```
 
-### Core principles
+Veltrix Drone combines operations, service, inventory, engineering analysis, documents, economics and fleet history.
 
-| Principle | Meaning |
+---
+
+# 👥 Who is it for
+
+Veltrix Drone can be useful for:
+
+- UAV fleet owners;
+- technicians;
+- repair workshops;
+- operators;
+- engineers;
+- inventory personnel;
+- organizations that need a unified technical record system.
+
+---
+
+# ✨ Main Features
+
+| Area | Capabilities |
 |---|---|
-| **Offline-first** | Internet access is not required for normal work |
-| **Local database** | Working data is stored in `dronebase.db` |
-| **Engineering traceability** | Flights, repairs, maintenance, components and events are linked |
-| **No fabricated technical states** | The application should not invent technical conclusions without factual data |
-| **Action history** | User actions and technical events are recorded |
-| **Windows ↔ Android** | Mobile synchronization uses a local API |
+| 🛩️ **Fleet** | UAV registry, cards, photos, status, history |
+| ✈️ **Flights** | planning, Dispatch, Preflight, Flight, Postflight |
+| 🔋 **LiPo** | batteries, cycles, condition, history |
+| 🔧 **Service** | repairs, maintenance, diagnostics, checklists |
+| 🧩 **Configuration** | components, nodes, revisions, change control |
+| 📈 **Reliability** | failures, cases, corrective measures |
+| 📦 **Inventory** | stock, issue, return, write-off, kits |
+| 🛒 **Procurement** | requests, orders, partial receipt, receipt |
+| 💰 **Economics** | expenses, budget, ownership cost |
+| 📁 **Documents** | attachments, QR, Excel, DOCX reports |
+| 👤 **Users** | roles, permissions, action history |
+| 📱 **Android** | local Windows ↔ Android synchronization |
 
 ---
 
-# ✨ What the application can do
+# ⚡ Quick Start
 
-<details>
-<summary><b>🛩️ Fleet Management</b></summary>
+After installing Veltrix Drone:
 
-- UAV registry;
-- models and serial numbers;
-- operational state and flight hours;
-- location;
-- assigned user;
-- photos and documents;
-- electronic UAV passport;
-- operational history.
+### 1. Start the application
 
-</details>
-
-<details>
-<summary><b>✈️ Flights and Planning</b></summary>
-
-- Mission Planner;
-- Dispatch Center;
-- Operations Calendar;
-- Preflight control;
-- flight log;
-- Postflight control;
-- telemetry;
-- flight debrief;
-- flight comparison;
-- technical trends.
-
-</details>
-
-<details>
-<summary><b>🔧 Service and Maintenance</b></summary>
-
-- repairs;
-- maintenance;
-- regulations;
-- checklists;
-- diagnostics;
-- bench tests;
-- Return to Service;
-- validation flights;
-- Work Packages;
-- Technical Cycles.
-
-</details>
-
-<details>
-<summary><b>🧩 Components and Configuration</b></summary>
-
-- physical component tracking;
-- exact component-to-node binding;
-- component resource;
-- replacement history;
-- Configuration Control;
-- FC Config Audit;
-- revision control.
-
-</details>
-
-<details>
-<summary><b>📊 Reliability and Engineering Analysis</b></summary>
-
-- Reliability Dashboard;
-- Node Degradation;
-- Reliability Cases;
-- Common Factors;
-- Corrective Actions;
-- Effectiveness Tracking;
-- Fleet Reliability Reports;
-- Engineering Command Center.
-
-</details>
-
-<details>
-<summary><b>📦 Supply and Economics</b></summary>
-
-- inventory;
-- receipt / issue / return / write-off;
-- kits;
-- procurement;
-- parts forecasting;
-- fleet economics;
-- budget;
-- total cost of ownership.
-
-</details>
-
-<details>
-<summary><b>📁 Data and Documents</b></summary>
-
-- attachments;
-- photos;
-- PDF / DOCX / XLSX;
-- technical reports;
-- QR codes;
-- Excel import / export;
-- backups;
-- action log.
-
-</details>
-
----
-
-# ⚡ Quick start in 5 minutes
-
-If you have just downloaded Veltrix Drone:
-
-### 1. Extract the release archive
-
-For example:
+Open:
 
 ```text
-C:\Veltrix_Drone\
+Veltrix Drone
 ```
 
-### 2. Start the application
+### 2. Create the administrator
 
-Run:
+The first launch opens the initial setup wizard.
 
-```text
-START_VELTRIX.bat
-```
-
-### 3. Create the administrator account
-
-During first setup specify:
-
-- organization name;
-- administrator name;
-- login;
-- password.
-
-### 4. Add your first drone
+### 3. Add the first drone
 
 ```text
 Operations → Drones → Add
 ```
 
-### 5. Add a LiPo battery
+### 4. Add a battery
 
 ```text
 Operations → Batteries → Add
 ```
 
-### 6. Add inventory items
-
-```text
-Supply → Inventory
-```
-
-### 7. Create your first backup
+### 5. Create a backup
 
 ```text
 System → Backups
 ```
 
 > [!TIP]
-> Before entering a large amount of real data, create one test drone, one battery, one repair and one flight to learn the workflow.
+> Before entering real operational data, create one test UAV and walk through a complete flight, repair and maintenance workflow.
 
 ---
 
 # 💻 Installation
 
-## Requirements
-
-Recommended:
+## Supported platform
 
 ```text
 Windows 10
 Windows 11
 ```
 
-The source distribution requires:
+## Install from GitHub Releases
 
-```text
-Python 3
-```
+1. Open the repository **Releases** page.
+2. Select the latest stable release.
+3. Download the Veltrix Drone Windows installer.
+4. Run the `.exe`.
+5. Follow the installation wizard.
+6. Start Veltrix Drone from the Start Menu or desktop shortcut.
 
-and dependencies from:
-
-```text
-requirements.txt
-```
-
-Main libraries:
-
-| Library | Purpose |
-|---|---|
-| CustomTkinter | user interface |
-| Pillow | image handling |
-| qrcode | QR generation |
-| openpyxl | Excel |
-| python-docx | DOCX |
-| tkinterdnd2 | Drag & Drop |
+> [!NOTE]
+> If Windows SmartScreen displays a warning for a new unsigned build, verify that the installer was downloaded from the official project repository.
 
 ---
 
-## Launch using the launcher
+# 👤 First Launch
 
-Run:
-
-```text
-START_VELTRIX.bat
-```
-
-The launcher searches for Python in this order:
-
-```text
-1. .venv\Scripts\python.exe
-2. venv\Scripts\python.exe
-3. py -3
-4. python
-```
-
----
-
-## If the application does not start
-
-Run:
-
-```text
-CHECK_PYTHON.bat
-```
-
-It checks:
-
-- Python version;
-- Python executable path;
-- availability of core dependencies.
-
----
-
-# 👤 First launch
-
-On first launch, Veltrix Drone opens the initial setup wizard.
-
-Fill in:
+On first launch the setup wizard asks for:
 
 | Field | Example |
 |---|---|
@@ -362,91 +222,16 @@ Fill in:
 | Login | admin |
 | Password | your password |
 
-After setup, the login screen will open.
+After setup, the login screen opens.
 
 > [!IMPORTANT]
-> Do not use a weak password for a real working installation.
+> Use a unique administrator password for a real working installation.
 
 ---
 
-# 🧭 Main menu
+# 🏁 Recommended Setup Order
 
-The navigation is divided into logical sections.
-
-## Operations
-
-- Dashboard
-- Command Center
-- Planning
-- Dispatch Center
-- Operations Calendar
-- Flight Debrief
-- Drones
-- Flights
-- Batteries
-
-## Service
-
-- Service Center
-- Repairs
-- Maintenance
-- Components
-- Checklists
-- Diagnostics
-- Corrective Actions
-- Configuration Control
-- Bench Tests
-- Return to Service
-- Validation Flights
-- Reference Flights
-- Node Degradation
-- Technical Health
-- Predictive Maintenance
-- Technical Review
-- Work Packages
-- Technical Cycle
-- Engineering Command Center
-- Reliability
-- Node Trends
-- Reliability Cases
-- Effectiveness Tracking
-- Reliability Reports
-- Regulations
-
-## Supply
-
-- Inventory
-- Procurement
-- Kits
-- QR Codes
-
-## Economics and Data
-
-- Analytics
-- Economics
-- Budget and TCO
-- Assistant
-- Knowledge Base
-- Technical Reports
-- Attachments
-- Excel
-
-## System
-
-For administrators:
-
-- Users
-- Action Log
-- Recycle Bin
-- Backups
-- Mobile Connection
-- System Diagnostics
-
----
-
-# 🏁 How to start from an empty database
-
-Recommended order:
+For a new database, use this order:
 
 ```text
 1. Users
@@ -457,12 +242,30 @@ Recommended order:
 6. Drone configuration
 7. Maintenance regulations
 8. Flights
-9. Repairs and maintenance
+9. Repairs / maintenance
 10. Attachments
 11. Backup
 ```
 
-This helps build correct links between entities from the beginning.
+This helps build consistent relationships between entities from the beginning.
+
+---
+
+# 🏠 Dashboard
+
+The Dashboard provides a fleet overview.
+
+It can show:
+
+- technical readiness;
+- aircraft requiring attention;
+- active repairs;
+- overdue maintenance;
+- inventory warnings;
+- notifications;
+- quick actions.
+
+The Dashboard is primarily designed for situational awareness.
 
 ---
 
@@ -474,9 +277,7 @@ Open:
 Operations → Drones
 ```
 
-## Adding a drone
-
-Create a new record and fill in the main fields:
+Create a drone and specify:
 
 - code;
 - model;
@@ -484,15 +285,12 @@ Create a new record and fill in the main fields:
 - status;
 - flight hours;
 - location;
-- assigned user;
-- firmware;
+- responsible user;
 - purchase date;
 - photo;
 - notes.
 
-### Recommended coding convention
-
-Use stable internal codes:
+### Recommended coding
 
 ```text
 DRN-001
@@ -500,93 +298,95 @@ DRN-002
 DRN-003
 ```
 
-Avoid changing a drone code without a strong reason because it is used by related technical records.
+> [!TIP]
+> Avoid changing a drone code without a strong reason because it is used to link flights, repairs, parts and other records.
 
 ---
 
 # 🪪 Drone Card
 
-Open a drone from the registry.
-
-The Drone Card acts as the **electronic technical passport** of the aircraft.
+The Drone Card is the main electronic technical passport of an aircraft.
 
 ## Overview
 
-Shows:
-
 - general information;
-- current technical state;
+- state;
 - flight hours;
-- configuration;
-- technical summary.
+- photo;
+- current configuration.
 
 ## Operation
 
-Contains:
-
-- mission plans;
+- plans;
 - flights;
 - LiPo;
-- resource information.
+- resource.
 
 ## Service
 
-Contains:
-
 - diagnostics;
-- troubleshooting;
+- faults;
 - failures;
 - repairs;
 - maintenance.
 
 ## Configuration
 
-Contains:
-
 - components;
 - electronics;
-- technical nodes.
+- nodes.
 
 ## History
 
-Contains:
-
-- files;
 - events;
-- technical changes.
+- files;
+- changes.
 
 ---
 
-# 🔋 LiPo Batteries
+# 🗓️ Planning
 
 Open:
 
 ```text
-Operations → Batteries
+Operations → Planning
 ```
 
-For every battery you can track:
+A mission plan can include:
 
-- internal code;
-- series;
-- capacity;
-- cycle count;
-- condition;
-- cost;
-- usage;
-- drone assignment;
-- QR.
+- drone;
+- pilot;
+- LiPo;
+- date;
+- time;
+- duration;
+- mission;
+- location;
+- notes.
 
-### Example coding
+---
+
+# 🚦 Dispatch Center
+
+Open:
 
 ```text
-BAT-001
-BAT-002
-BAT-003
+Operations → Dispatch Center
 ```
 
-> [!TIP]
-> Assign a unique code to every physical battery.
+Dispatch helps determine whether the aircraft can be used for the planned sortie.
+
+It considers recorded conditions such as:
+
+- active repairs;
+- technical blocks;
+- incomplete checks;
+- LiPo state;
+- scheduling conflicts;
+- maintenance requirements.
+
+> [!NOTE]
+> Veltrix Drone can only evaluate information that has actually been recorded.
 
 ---
 
@@ -598,84 +398,100 @@ Open:
 Operations → Flights
 ```
 
-A flight record may include:
+A flight record can contain:
 
 - flight number;
 - drone;
 - pilot;
-- battery;
+- LiPo;
 - date;
 - duration;
 - mission;
 - result;
-- remarks;
-- operational data.
+- remarks.
 
-After saving, the flight becomes part of the UAV history.
+The saved record becomes part of the aircraft history.
 
 ---
 
-# 🗓️ Planning and Dispatch
+# ✅ Preflight
 
-## Creating a mission plan
+Complete the preflight checklist before operation.
+
+Recommended sequence:
 
 ```text
-Operations → Planning
+Plan
+→ Dispatch
+→ Preflight
+→ Flight
 ```
 
-Select:
-
-- drone;
-- pilot;
-- battery;
-- date;
-- time;
-- duration;
-- mission;
-- location.
+If a problem is detected, record it before the flight.
 
 ---
 
-## Checking readiness
+# 🛬 Postflight
 
-Before a sortie:
+After a flight, record:
 
-```text
-Operations → Dispatch Center
-```
-
-Dispatch Center evaluates recorded restrictions such as:
-
-- active repair;
-- maintenance requirement;
-- technical block;
-- LiPo state;
-- schedule conflict.
-
-> [!NOTE]
-> Readiness depends on the data that is actually recorded. Missing information cannot be evaluated.
-
----
-
-# ✅ Preflight and Postflight
-
-## Before flight
-
-Complete the Preflight checklist.
-
-Record remarks immediately instead of postponing them until later.
-
-## After flight
-
-Record:
-
-- detected defects;
-- changes in behavior;
 - physical damage;
-- repair requirement;
-- technical events.
+- unusual behavior;
+- vibration;
+- communication problems;
+- LiPo condition;
+- diagnostic requirements;
+- repair requirements.
 
-If a technical problem is found, create a repair or diagnostic record.
+Good Postflight records significantly improve long-term engineering history.
+
+---
+
+# 🔎 Flight Debrief
+
+Flight Debrief combines:
+
+- plan;
+- Dispatch;
+- Preflight;
+- flight;
+- analysis;
+- Postflight;
+- failures;
+- remarks;
+- conclusions.
+
+---
+
+# 🔋 LiPo Batteries
+
+Open:
+
+```text
+Operations → Batteries
+```
+
+Track each physical battery separately.
+
+You can store:
+
+- code;
+- series;
+- capacity;
+- cycle count;
+- condition;
+- cost;
+- history;
+- UAV assignment;
+- QR code.
+
+Example:
+
+```text
+BAT-001
+BAT-002
+BAT-003
+```
 
 ---
 
@@ -687,61 +503,58 @@ Open:
 Service → Repairs
 ```
 
-## Creating a repair
-
-Specify:
+A repair record can contain:
 
 - drone;
 - issue;
-- status;
-- affected nodes;
+- affected node;
 - description;
-- parts used;
+- status;
+- performed work;
+- parts;
 - cost;
-- labor.
+- labor;
+- documents.
 
-### Good practice
-
-Avoid vague notes such as:
+### Poor description
 
 ```text
-broken
+Does not work
 ```
 
-Prefer:
+### Better description
 
 ```text
 Crack found on the front-right arm after landing.
-Increased vibration detected during FR motor check.
+Increased vibration detected during FR motor inspection.
 ```
 
-Better records produce better reliability history.
+High-quality records make reliability analysis more useful.
 
 ---
 
 # 🛠️ Maintenance
 
-Open:
+Use:
 
 ```text
 Service → Service Center
 ```
 
-or:
+and:
 
 ```text
 Service → Maintenance
 ```
 
-## Scheduled maintenance
+Schedule maintenance by:
 
-You can define:
-
-- due date;
-- flight-hour threshold;
+- date;
+- due interval;
+- resource;
 - priority;
 - responsible technician;
-- current work state.
+- work state.
 
 ## Regulations
 
@@ -749,72 +562,213 @@ You can define:
 Service → Regulations
 ```
 
-A regulation can be based on:
+Regulations can be linked to:
 
 - calendar interval;
 - flight hours;
 - node;
-- UAV category.
+- work type.
 
 ---
 
-# 🧩 Components and Configuration
+# 🧩 Components and Nodes
 
-## Components
+Open:
 
 ```text
 Service → Components
 ```
 
-Each physical component can be linked to a specific UAV and node.
-
-The logical link is:
-
-```text
-component
-   ↓
-drone_code
-   ↓
-node_key
-```
+Each physical component can be linked to a specific UAV and specific node.
 
 Example:
 
 ```text
 MOTOR-014
 → DRN-002
-→ motor_fr
+→ front-right motor
 ```
 
-This allows the system to know which exact physical part is installed at a specific location.
+This makes it possible to track:
+
+- what is installed;
+- when it was installed;
+- how long it was used;
+- when it was removed;
+- which technical events affected it.
 
 ---
 
-## Configuration Control
+# 🧬 Configuration Control
+
+Open:
 
 ```text
 Service → Configuration Control
 ```
 
-Used for:
+Use this section for:
 
 - current configuration;
 - approved baseline;
-- configuration revisions;
 - change comparison;
-- Return to Service verification.
+- revision history;
+- release control.
 
 ---
 
-# 📦 Inventory and Procurement
+# 🧪 Bench Tests and Return to Service
 
-## Inventory
+After repair, additional verification may be required.
+
+Recommended flow:
+
+```text
+Repair
+→ Bench Test
+→ Return to Service
+→ Validation Flight
+```
+
+Closing a repair does not always mean that the aircraft is ready for operation.
+
+---
+
+# 🧾 Work Packages and Technical Cycles
+
+## Work Package
+
+Formalizes technical work:
+
+- operations;
+- technician;
+- materials;
+- time;
+- cost;
+- result.
+
+## Technical Cycle
+
+Combines the complete path:
+
+```text
+Issue
+→ Work
+→ Work Package
+→ Verification
+→ RTS
+→ Validation Flight
+→ Closure
+```
+
+---
+
+# 📈 Reliability
+
+Open:
+
+```text
+Service → Reliability
+```
+
+Uses accumulated factual history:
+
+- confirmed failures;
+- flight hours;
+- downtime;
+- recurrence;
+- technical work.
+
+> [!IMPORTANT]
+> A new database naturally has limited reliability information. The module becomes more useful as operational history grows.
+
+---
+
+# 🧷 Reliability Cases
+
+Open:
+
+```text
+Service → Reliability Cases
+```
+
+A Reliability Case is useful when the same problem repeats.
+
+Example:
+
+```text
+Several UAVs
+→ same node type
+→ repeated confirmed failures
+→ one engineering case
+```
+
+---
+
+# 🛠️ Corrective Actions
+
+Open:
+
+```text
+Service → Corrective Actions
+```
+
+Track:
+
+- action;
+- owner;
+- due date;
+- status;
+- result;
+- verification.
+
+---
+
+# 📉 Effectiveness Tracking
+
+Open:
+
+```text
+Service → Effectiveness Tracking
+```
+
+Compare the factual situation before and after corrective measures.
+
+| Metric | Before | After |
+|---|---:|---:|
+| Failures | 5 | 1 |
+| Flight hours | 80 h | 95 h |
+| Downtime | 12 h | 3 h |
+| Cost | 45,000 | 10,000 |
+
+The final conclusion remains a human engineering decision.
+
+---
+
+# 🧭 Engineering Command Center
+
+Combines:
+
+- fleet technical state;
+- engineering queue;
+- Reliability Cases;
+- Corrective Actions;
+- Technical Cycles;
+- configuration;
+- restrictions;
+- operational release status.
+
+---
+
+# 📦 Inventory
+
+Open:
 
 ```text
 Supply → Inventory
 ```
 
-For every item you can store:
+For each item you can store:
 
 - SKU;
 - name;
@@ -823,18 +777,7 @@ For every item you can store:
 - minimum quantity;
 - unit cost.
 
-### Example SKU
-
-```text
-STK-0001
-STK-0002
-```
-
----
-
-## Stock movements
-
-Supported operations:
+Supported movements:
 
 ```text
 Receipt
@@ -843,17 +786,19 @@ Return
 Write-off
 ```
 
-If a component is issued to a specific UAV, select the drone.
+If a part is issued for a specific aircraft, link it to the drone.
 
 ---
 
-## Procurement
+# 🛒 Procurement
+
+Open:
 
 ```text
 Supply → Procurement
 ```
 
-A procurement request can move through:
+Typical process:
 
 ```text
 Draft
@@ -865,82 +810,18 @@ Draft
 
 ---
 
-# 📈 Reliability and Engineering
+# 💰 Economics and Budget
 
-These sections become more useful as real operational history accumulates.
+The application can consolidate:
 
-> [!IMPORTANT]
-> If the database contains only a few flights, failures and repairs, reliability analysis will naturally be limited.
-
-## Reliability
-
-```text
-Service → Reliability
-```
-
-Uses:
-
-- confirmed failures;
-- flight hours;
-- downtime;
-- recurrence;
-- technical events.
-
----
-
-## Reliability Cases
-
-```text
-Service → Reliability Cases
-```
-
-A Reliability Case is useful when the same technical issue repeats.
-
-Example:
-
-```text
-3 UAVs of the same model
-→ same node_key
-→ several confirmed failures
-→ one engineering case
-```
-
----
-
-## Corrective Actions
-
-```text
-Service → Corrective Actions
-```
-
-Track:
-
-- action;
-- responsible person;
-- due date;
-- status;
-- verification result.
-
----
-
-## Effectiveness Tracking
-
-```text
-Service → Effectiveness Tracking
-```
-
-The application compares data **before and after** a corrective measure.
-
-Example:
-
-| Metric | Before | After |
-|---|---:|---:|
-| Failures | 5 | 1 |
-| Flight hours | 80 h | 95 h |
-| Downtime | 12 h | 3 h |
-| Cost | 45,000 | 10,000 |
-
-The final engineering conclusion remains a human decision.
+- repairs;
+- maintenance;
+- inventory;
+- procurement;
+- operating expenses;
+- cost by UAV;
+- budget;
+- total cost of ownership.
 
 ---
 
@@ -948,27 +829,19 @@ The final engineering conclusion remains a human decision.
 
 ## Knowledge Base
 
-```text
-Economics and Data → Knowledge Base
-```
+Create technical articles for:
 
-Create technical articles about:
-
-- common faults;
+- faults;
 - symptoms;
 - verification methods;
 - technical solutions.
 
 ## Diagnostics
 
-```text
-Service → Diagnostics
-```
-
-Veltrix Drone compares entered symptoms against the local knowledge base.
+Veltrix Drone can compare recorded symptoms against the local knowledge base.
 
 > [!WARNING]
-> Diagnostics is an engineering aid, not an automatic final diagnosis.
+> Diagnostics is an engineering aid, not an automatic final technical conclusion.
 
 ---
 
@@ -980,22 +853,24 @@ Open:
 Supply → QR Codes
 ```
 
-1. Select an entity type.
-2. Select an object code.
+### Generate a QR code
+
+1. Select entity type.
+2. Select object code.
 3. Click **Generate QR Code**.
-4. Use **Save PNG** if necessary.
+4. Save PNG if needed.
 
-QR can be used for:
+Useful for labeling:
 
-- drone;
-- battery;
-- component;
-- kit;
-- inventory item.
+- drones;
+- LiPo batteries;
+- components;
+- kits;
+- inventory items.
 
 ---
 
-# 📎 Attachments and Documents
+# 📎 Attachments
 
 Open:
 
@@ -1003,16 +878,13 @@ Open:
 Economics and Data → Attachments
 ```
 
-Supported attachments include:
+Attach:
 
 - photos;
-- PDF;
-- DOCX;
-- XLSX;
-- TXT;
+- PDF files;
+- documents;
+- spreadsheets;
 - other files.
-
-Files are linked to a specific entity.
 
 Example:
 
@@ -1034,26 +906,24 @@ Economics and Data → Excel
 
 Available actions:
 
-### Export
-
-```text
-Export entire database to XLSX
-```
-
-### Template
-
-```text
-Create import template
-```
-
-### Import
-
-```text
-Import XLSX
-```
+- data export;
+- import template creation;
+- data import.
 
 > [!WARNING]
-> Always create a backup before a large import.
+> Create a backup before any large import.
+
+---
+
+# 📄 Technical Reports
+
+The application can generate technical documents such as:
+
+- aircraft passport;
+- repair report;
+- diagnostics;
+- maintenance history;
+- reliability reports.
 
 ---
 
@@ -1065,74 +935,16 @@ Open:
 System → Backups
 ```
 
-Recommended:
+Create backups:
 
-### Before major changes
+- before an update;
+- before bulk import;
+- before restore;
+- after major changes;
+- regularly during operation.
 
-Create a backup.
-
-### Before updating Veltrix Drone
-
-Create a backup.
-
-### Before bulk Excel import
-
-Create a backup.
-
-### Before restoring another database
-
-Create a backup of the current database first.
-
----
-
-## Main data file
-
-```text
-dronebase.db
-```
-
-If this file is preserved, the core application records are preserved.
-
----
-
-# 📱 Windows ↔ Android
-
-Open:
-
-```text
-System → Mobile Connection
-```
-
-The Windows application starts a local API.
-
-Architecture:
-
-```text
-Windows Veltrix
-      ↕
- Local API / Wi-Fi
-      ↕
-Android Veltrix
-```
-
-The page displays:
-
-- server state;
-- local IP;
-- port;
-- access token;
-- previously connected devices.
-
-### Connection procedure
-
-1. Connect PC and phone to the same Wi-Fi/LAN.
-2. Start Mobile Connection on Windows.
-3. Enter the Windows server address on Android.
-4. Enter the token.
-5. Start synchronization.
-
-> [!WARNING]
-> Do not publish the token and do not expose the local API port directly to the Internet.
+> [!IMPORTANT]
+> Backups are the primary way to protect your working history.
 
 ---
 
@@ -1144,37 +956,72 @@ Open:
 System → Users
 ```
 
-It is recommended to create a separate account for every person.
-
-| Role | Main purpose |
+| Role | Purpose |
 |---|---|
-| Operator | daily operation |
-| Technician | service and engineering |
-| Storekeeper | inventory |
-| Administrator | system management |
+| **Operator** | daily operation |
+| **Technician** | diagnostics, repair, maintenance |
+| **Storekeeper** | inventory and supply |
+| **Administrator** | system management |
 
-Avoid using one administrator account for everyone.
+Use separate accounts for different users whenever possible.
+
+---
+
+# 📱 Windows ↔ Android
+
+Open:
+
+```text
+System → Mobile Connection
+```
+
+Windows and Android can synchronize over the same local network.
+
+```text
+Veltrix Drone Windows
+        ↕
+    local network
+        ↕
+Veltrix Drone Android
+```
+
+Windows displays:
+
+- address;
+- port;
+- token;
+- server status;
+- connected devices.
+
+## Connection
+
+1. Connect PC and phone to the same network.
+2. Start Mobile Connection on Windows.
+3. Open Veltrix Drone Android.
+4. Enter the address and token.
+5. Start synchronization.
+
+> [!WARNING]
+> Do not publish the connection token or expose the local server directly to the Internet.
 
 ---
 
 # 🔁 Typical Workflows
 
-## Workflow 1 — New UAV
+## New UAV
 
 ```text
 Drones
-→ Add UAV
-→ Add photo
-→ Define configuration
-→ Assign components
-→ Add LiPo
-→ Configure maintenance regulations
-→ Generate QR
+→ Add
+→ Photo
+→ Configuration
+→ Components
+→ LiPo
+→ Regulations
+→ QR
 ```
 
----
-
-## Workflow 2 — Normal Flight
+## Normal Sortie
 
 ```text
 Planning
@@ -1182,256 +1029,84 @@ Planning
 → Preflight
 → Flight
 → Postflight
-→ Flight Debrief
+→ Debrief
 ```
 
----
-
-## Workflow 3 — Technical Fault Found
+## Technical Fault
 
 ```text
-Postflight remark
+Remark
 → Diagnostics
 → Repair
 → Work Package
 → Bench Test
-→ Return to Service
+→ RTS
 → Validation Flight
 → Closure
 ```
 
----
-
-## Workflow 4 — Component Replacement
+## Component Replacement
 
 ```text
 Inventory
 → Issue part
 → Drone
-→ Components
 → Remove old component
 → Install new component
-→ Bind node_key
 → Update configuration
 ```
 
----
-
-## Workflow 5 — Repeating Problem
+## Repeating Failure
 
 ```text
-Several failures
+Failures
 → Reliability Case
 → Common Factors
 → Corrective Action
-→ Implement measure
+→ Implementation
 → Effectiveness Tracking
 → Engineering conclusion
 ```
 
 ---
 
-# 🔄 Updating the Application
-
-## Recommended procedure
+# 🔄 Updating
 
 1. Close Veltrix Drone.
 2. Create a backup.
-3. Copy `dronebase.db` to a safe location.
-4. Extract the new release.
-5. Copy new application files over the current installation.
-6. **Do not replace your working `dronebase.db`.**
-7. Run `START_VELTRIX.bat`.
+3. Download the new release from GitHub Releases.
+4. Run the new installer.
+5. Complete the update.
+6. Start Veltrix Drone and verify that your data is available.
 
-Current release:
-
-```text
-Veltrix Drone v1.0
-DB Schema 64
-```
-
-> [!NOTE]
-> Application version `v1.0` and database schema `64` are different versioning systems. This is normal.
-
----
-
-# 📂 Where Data is Stored
-
-Example structure:
-
-```text
-Veltrix_Drone/
-│
-├── app.py
-├── version.json
-├── requirements.txt
-├── START_VELTRIX.bat
-├── CHECK_PYTHON.bat
-│
-├── assets/
-│
-├── backups/
-├── documents/
-├── logs/
-├── media/
-├── qr_codes/
-├── reports/
-│
-├── mobile_sync_server.py
-├── veltrix_*.py
-│
-└── dronebase.db
-```
-
-| Path | Content |
-|---|---|
-| `dronebase.db` | main working database |
-| `backups/` | backup files |
-| `documents/` | documents |
-| `media/` | photos and media |
-| `reports/` | generated reports |
-| `qr_codes/` | QR PNG files |
-| `logs/` | technical logs |
-
----
-
-# 🚫 What Must Not Be Uploaded to GitHub
-
-Never publish:
-
-```text
-dronebase.db
-dronebase.db-wal
-dronebase.db-shm
-```
-
-Also avoid publishing:
-
-```text
-backups/
-logs/
-media/
-documents/
-reports/
-qr_codes/
-```
-
-when they contain real operational data.
-
----
-
-## Recommended `.gitignore`
-
-```gitignore
-__pycache__/
-*.py[cod]
-*.pyd
-
-.venv/
-venv/
-
-dronebase.db
-dronebase.db-wal
-dronebase.db-shm
-*.db-journal
-
-backups/
-logs/
-media/
-documents/
-reports/
-qr_codes/
-
-.idea/
-.vscode/
-
-Thumbs.db
-Desktop.ini
-.DS_Store
-
-*.tmp
-*.bak
-*.log
-```
+> [!IMPORTANT]
+> Always create a backup before updating.
 
 ---
 
 # 🧯 Troubleshooting
 
-## Application does not start
+## Veltrix Drone does not start
 
-Run:
+1. Restart Windows.
+2. Try launching Veltrix Drone normally.
+3. Check whether security software quarantined any application files.
+4. If the problem continues, create a GitHub Issue.
 
-```text
-CHECK_PYTHON.bat
-```
+## Data is not visible after an update
 
-Check Python and dependencies.
+Do not create a new working database or delete existing data. Restore the latest backup using the built-in backup tools if required.
 
----
-
-## `ModuleNotFoundError`
-
-A required dependency is missing.
-
-See:
-
-```text
-requirements.txt
-```
-
----
-
-## Data disappeared after an update
-
-Check that Veltrix Drone is using your original:
-
-```text
-dronebase.db
-```
-
-Do not overwrite a working database with a new empty one.
-
----
-
-## Interface does not fit the screen
-
-Check Windows display scaling.
-
-Recommended test values:
-
-```text
-100%
-125%
-150%
-```
-
----
-
-## Drag & Drop does not work
-
-Check whether:
-
-```text
-tkinterdnd2
-```
-
-is installed.
-
-Attachments should still work through the normal file-selection button.
-
----
-
-## Android cannot connect to Windows
+## Android cannot connect
 
 Check:
 
-1. both devices are on the same Wi-Fi;
-2. the local server is running;
+1. both devices are on the same local network;
+2. Mobile Connection is running;
 3. IP address is correct;
 4. port is correct;
 5. token is correct;
-6. Windows Firewall allows access on private networks.
+6. Windows Firewall allows the connection.
 
 ---
 
@@ -1439,29 +1114,27 @@ Check:
 
 ### Is Internet required?
 
-No. Core functionality is local.
+No, not for normal local operation.
 
-### Where is the database?
+### Can Veltrix Drone work only on one PC?
 
-```text
-dronebase.db
-```
+Veltrix Drone runs as a Windows application with local data. Android can synchronize with Windows over the local network.
 
-### Can I delete `dronebase.db`?
+### Is Android only a remote control?
 
-Not if it contains your working data.
+No. The Android edition is designed as a standalone application with local data and Windows synchronization.
 
-### Why is the application version 1.0 but database schema 64?
+### Does Veltrix Drone automatically diagnose broken components?
 
-Because `1.0` is the public product version and `64` is an internal database structure version.
+No. Engineering modules support analysis of recorded facts, but the final technical decision belongs to a qualified specialist.
 
-### Is Android only a remote control for Windows?
+### Should I create backups?
 
-No. The Android concept is a standalone local application with optional synchronization to Windows.
+Yes, especially before updates, imports and restores.
 
-### Does Veltrix automatically decide that a component is broken?
+### Can Veltrix Drone be sold?
 
-No. Engineering modules help interpret recorded facts but do not replace a qualified technical conclusion.
+Not without separate written permission from the copyright holder.
 
 ---
 
@@ -1470,35 +1143,20 @@ No. Engineering modules help interpret recorded facts but do not replace a quali
 Create a **GitHub Issue** and include:
 
 ```text
-Veltrix Drone:
-v1.0
-
-Windows:
-Windows 10 / 11
-
-Python:
-version
+Veltrix Drone: v1.0
+Windows: Windows 10 / 11
 
 Section:
-for example "Repairs"
-
 What you did:
-...
-
 Expected:
-...
-
 Actual:
-...
-
-Error / traceback:
-...
+Error message:
 ```
 
 Screenshots are welcome.
 
 > [!WARNING]
-> Do not attach your working `dronebase.db`, personal data or confidential documents.
+> Do not publish real operational data, backups or confidential documents.
 
 ---
 
@@ -1508,8 +1166,6 @@ Veltrix Drone is distributed under the custom:
 
 ## Veltrix Drone Non-Sale License
 
-Use is permitted according to the license terms.
-
 Without written permission from the copyright holder, the following are prohibited:
 
 - selling;
@@ -1517,23 +1173,23 @@ Without written permission from the copyright holder, the following are prohibit
 - paid redistribution;
 - commercial repackaging;
 - selling modified builds;
-- paid SaaS based on the software;
-- providing paid access to Veltrix Drone.
+- paid access;
+- commercial SaaS based on Veltrix Drone.
 
-Full license text:
+Full text:
 
 ```text
 LICENSE
 ```
 
 > [!IMPORTANT]
-> This is not a standard OSI Open Source License.
+> Veltrix Drone Non-Sale License is not a standard OSI Open Source License.
 
 ---
 
-# 📦 GitHub Release
+# 📦 GitHub Releases
 
-For the stable release use:
+Recommended stable release:
 
 ### Tag
 
@@ -1541,17 +1197,13 @@ For the stable release use:
 v1.0
 ```
 
-### Release name
+### Name
 
 ```text
 Veltrix Drone v1.0 Stable
 ```
 
-### Release asset
-
-```text
-Veltrix_Drone_v1.0_RELEASE.zip
-```
+For end users, Releases should contain the ready-to-install **Windows `.exe` / installer**.
 
 ---
 
@@ -1559,12 +1211,12 @@ Veltrix_Drone_v1.0_RELEASE.zip
 
 ## Veltrix Drone v1.0
 
-**Local engineering environment for the full UAV lifecycle**
+**Unified engineering environment for the complete UAV lifecycle**
 
 ```text
 Drone → Flight → Event → Diagnostics → Repair → Verification → Operation → Reliability
 ```
 
-**Stable · Windows · Offline-first · SQLite**
+**Stable · Windows · Offline-first**
 
 </div>
